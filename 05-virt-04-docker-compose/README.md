@@ -30,7 +30,7 @@
 - Скриншот страницы, как на слайде из презентации (слайд 37).
 
 <p align="center">
-  <img width="1200" height="600" src="./img_3.png">
+  <img width="1200" height="600" src="img_3.png">
 </p>
 ## Задача 2
 
@@ -45,7 +45,7 @@
 ![img_1.png](img_1.png)
 
 <p align="center">
-  <img width="1200" height="600" src="./img_4.png">
+  <img width="1200" height="600" src="img_4.png">
 </p>
 ## Задача 3
 
@@ -59,7 +59,7 @@
 ![img_5.png](img_5.png)
 ![img_6.png](img_6.png)
 <p align="center">
-  <img width="1200" height="600" src="./img_5.png">
+  <img width="1200" height="600" src="img_5.png">
 </p>
 ## Задача 4 (*)
 
