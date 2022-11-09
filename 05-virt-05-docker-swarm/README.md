@@ -27,8 +27,11 @@
 Дайте письменые ответы на следующие вопросы:
 
 - В чём отличие режимов работы сервисов в Docker Swarm кластере: replication и global?
+global означает, что сервис будет запущен ровно в одном экземпляре на всех возможных нодах. А replicated означает, что n-ое кол-во контейнеров для данного сервиса будет запущено на всех доступных нодах.
 - Какой алгоритм выбора лидера используется в Docker Swarm кластере?
+RAFT - ноды делают запрос на лидерство: первый ответивший им становится. Далее они опрашивают друг друга на предмет доступнгости лидера и если лидер перестает отвечать, назначается новый
 - Что такое Overlay Network?
+Дословно, сеть, построенная поверх другой. Позволяет общаться контейнерам в рамках кластера между собой, даже если они на разных нодах. Маршрутизацией занимается docker engine
 
 ## Задача 2
 
@@ -38,6 +41,14 @@
 ```
 docker node ls
 ```
+[root@node01 ~]# docker node ls
+ID                            HOSTNAME             STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+9tt9cwtuan42iq9jy173afjlu *   node01.netology.yc   Ready     Active         Leader           20.10.21
+z5y3u4v9m6cwtp3nqy7h7fv2f     node02.netology.yc   Ready     Active         Reachable        20.10.21
+slkjp7ppc38z0cr4o8f1iy1s4     node03.netology.yc   Ready     Active         Reachable        20.10.21
+ezea1f6dcadm9brcz46j22cdj     node04.netology.yc   Ready     Active                          20.10.21
+dmg2sxic9vsy8grh3bshao516     node05.netology.yc   Ready     Active                          20.10.21
+rpaebxbhbt5p8f266f3c9u7ii     node06.netology.yc   Ready     Active                          20.10.21
 
 ## Задача 3
 
@@ -47,7 +58,16 @@ docker node ls
 ```
 docker service ls
 ```
-
+[root@node01 ~]# docker service ls
+ID             NAME                          MODE         REPLICAS   IMAGE                                          PORTS
+yrf8509wi9f6   monitoring_alertmanager       replicated   1/1        stefanprodan/swarmprom-alertmanager:v0.14.0    
+nfx0cz6hu8dm   monitoring_caddy              replicated   1/1        stefanprodan/caddy:latest                      *:3000->3000/tcp, *:9090->9090/tcp, *:9093-9094->9093-9094/tcp
+elsapfljd1y7   monitoring_cadvisor           global       6/6        google/cadvisor:latest                         
+o8s357gcqlzj   monitoring_dockerd-exporter   global       6/6        stefanprodan/caddy:latest                      
+vq7elz41wsxj   monitoring_grafana            replicated   1/1        stefanprodan/swarmprom-grafana:5.3.4           
+zewawzqwmr0c   monitoring_node-exporter      global       5/6        stefanprodan/swarmprom-node-exporter:v0.16.0   
+d3wnjj0er8ep   monitoring_prometheus         replicated   0/1        stefanprodan/swarmprom-prometheus:v2.5.0       
+0m8w8awopm69   monitoring_unsee              replicated   1/1        cloudflare/unsee:v0.8.0     
 ## Задача 4 (*)
 
 Выполнить на лидере Docker Swarm кластера команду (указанную ниже) и дать письменное описание её функционала, что она делает и зачем она нужна:

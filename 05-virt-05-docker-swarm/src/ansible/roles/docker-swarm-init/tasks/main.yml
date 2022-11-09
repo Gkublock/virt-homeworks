@@ -1,4 +1,8 @@
 ---
+  - name: Nodes Leaving the Swarm
+    shell: docker swarm leave -f
+    ignore_errors: true
+
   - name: Initialize Docker Swarm
     shell: "docker swarm init --advertise-addr={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:2377"
     tags: swarm
